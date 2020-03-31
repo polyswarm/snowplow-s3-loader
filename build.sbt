@@ -15,7 +15,7 @@
 lazy val root = project.in(file("."))
   .settings(
     name        := "snowplow-s3-loader",
-    version     := "0.7.0",
+    version     := "0.8.0",
     description := "Load the contents of a Kinesis stream, NSQ or Kafka topic to S3"
   )
   .settings(BuildSettings.buildSettings)
@@ -49,5 +49,10 @@ lazy val root = project.in(file("."))
     )
   )
   .enablePlugins(JavaAppPackaging, DockerPlugin)
+
+assemblyMergeStrategy in assembly := {
+ case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+ case x => MergeStrategy.first
+}
 
 shellPrompt := { _ => "s3-loader> " }
